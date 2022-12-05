@@ -1,54 +1,44 @@
 #include<iostream>
 using namespace std;
-#include<climits>
 
-/* 
-1 1 2 2 2 3 3 3 3 4
- */
-
-int sorted(int arr[],int n)
+// sorting of array
+void sort(int arr[], int n)
 {
-    for(int i=0; i<n-1; i++)
-    {  
+    for(int i=0; i<n; i++)
+    {
         for(int j=i+1; j<n; j++)
         {
-            if(arr[j]<arr[i])
+            if(arr[i] > arr[j])
             {
-                int temp = arr[j];
-                arr[j] = arr[i];
-                arr[i] = temp;
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
             }
         }
     }
-    return arr[n];
 }
 
-int maxf(int arr[],int n)
+// maximum frequency of an element in an array
+int maxFreq(int arr[], int n)
 {
-    int count =0;
-    int maxf = INT_MIN;
-
-    for(int i=0;i<n-1;i++)
+    int max = 0;
+    int count = 1;
+    for(int i=0; i<n; i++)
     {
-            if(arr[i]!=arr[i-1])
-            {
-                maxf = max(maxf,count);
-                count = 0;
-            }
-        
-        for(int j=i+1;j<n;j++)
+        if(arr[i] == arr[i+1])
         {
-
-            if(arr[i]==arr[j])
-            {
-                count++;
-            }
+            count++;
         }
-
+        else
+        {
+            if(count > max)
+            {
+                max = count;
+            }
+            count = 1;
+        }
     }
-
-
-    return count;
+    return max;
 }
 
 int main()
@@ -59,22 +49,23 @@ int main()
     {
         int n;
         cin>>n;
-        int A[n];
-        
-        for(int i=0; i<n; i++)
+        int a[n];
+        for(int i=0;i<n;i++)
         {
-            cin>>A[i];
+            cin>>a[i];
         }
-        int B[n];
-        B[n] = sorted(A,n);
-        /* find the largest frequency possible
-        subtract it with n */ 
 
-        cout<<maxf(B,n)<<endl;
-
-        // if(n==1)
-        // {
-        //     cout<<0<<endl;
-        // }
+        sort(a, n);
+        int m = maxFreq(a, n);
+        
+        if(m == n)
+        {
+            cout<<0<<endl;
+        }
+        else
+        {
+            cout<<n-m<<endl;
+        }
     }
+    return 0;
 }
